@@ -19,7 +19,7 @@
         {
           alert: 'certmanager_cert_expiry_soon',
           expr: |||
-            avg by (exported_namespace, name) (
+            avg by (exported_namespace, namespace, name) (
               certmanager_certificate_expiration_timestamp_seconds - time()
             ) < (21 * 24 * 3600) # 21 days in seconds
           |||,
@@ -37,7 +37,7 @@
         {
           alert: 'certmanager_cert_not_ready',
           expr: |||
-            max by (name, exported_namespace, condition) (
+            max by (name, exported_namespace, namespace, condition) (
               certmanager_certificate_ready_status{condition!="True"} == 1
             )
           |||,

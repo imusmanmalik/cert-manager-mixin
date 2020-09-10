@@ -33,4 +33,4 @@ To use the dashboard, it can be imported or provisioned for Grafana by grabbig t
 
 ## Manifests
 
-Pre rendered manifests can also be found at `/manifests`. These use the default configuration as mentioned in [Config Tweaks](#config-tweaks), and as such assume you're Grafana instance is at https://grafana.example.com/, which it's probably not.
+Pre rendered manifests can also be found at https://monitoring.mixins.dev/cert-manager/
