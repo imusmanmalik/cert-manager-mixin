@@ -35,9 +35,9 @@ tests:
 # Cert expiry
 - interval: 1m
   input_series:
-  - series: certmanager_certificate_expiration_timestamp_seconds{exported_namespace="test", name="expired-ingress-cert", foo="bar"}
+  - series: certmanager_certificate_expiration_timestamp_seconds{namespace="cert-manager", exported_namespace="test", name="expired-ingress-cert", foo="bar"}
     values: 1814400+0x43200  # 21d in seconds, static for 30d of samples
-  - series: certmanager_certificate_expiration_timestamp_seconds{exported_namespace="test", name="90d-ingress-cert"}
+  - series: certmanager_certificate_expiration_timestamp_seconds{namespace="cert-manager", exported_namespace="test", name="90d-ingress-cert"}
     values: 7776000+0x43200  # 90d in seconds, static for 30d of samples
   alert_rule_test:
   - eval_time: 61m
@@ -46,6 +46,7 @@ tests:
     - exp_labels:
         severity: critical
         exported_namespace: test
+        namespace: cert-manager
         name: expired-ingress-cert
       exp_annotations:
         message: The cert `expired-ingress-cert` is 20d 22h 59m 0s from expiry, it should have renewed over a week ago
@@ -56,11 +57,11 @@ tests:
 # Cert not ready
 - interval: 1m
   input_series:
-  - series: certmanager_certificate_ready_status{exported_namespace="test", name="ready", condition="True"}
+  - series: certmanager_certificate_ready_status{namespace="cert-manager", exported_namespace="test", name="ready", condition="True"}
     values: 1+0x30
-  - series: certmanager_certificate_ready_status{exported_namespace="test", name="not ready", condition="False"}
+  - series: certmanager_certificate_ready_status{namespace="cert-manager", exported_namespace="test", name="not ready", condition="False"}
     values: 1+0x30
-  - series: certmanager_certificate_ready_status{exported_namespace="test", name="who knows", condition="Unknown"}
+  - series: certmanager_certificate_ready_status{namespace="cert-manager", exported_namespace="test", name="who knows", condition="Unknown"}
     values: 1+0x30
   alert_rule_test:
   - eval_time: 10m
@@ -69,6 +70,7 @@ tests:
     - exp_labels:
         severity: critical
         exported_namespace: test
+        namespace: cert-manager
         name: not ready
         condition: "False"
       exp_annotations:
@@ -80,6 +82,7 @@ tests:
     - exp_labels:
         severity: critical
         exported_namespace: test
+        namespace: cert-manager
         name: who knows
         condition: "Unknown"
       exp_annotations:
