@@ -30,3 +30,7 @@ make
 ```
 
 To use the dashboard, it can be imported or provisioned for Grafana by grabbig the [cert-manager.json](dashboards/cert-manager.json) file as is.
+
+## Manifests
+
+Pre rendered manifests can also be found at https://monitoring.mixins.dev/cert-manager/
