@@ -4,38 +4,38 @@
       name: 'cert-manager',
       rules: [
         {
-          alert: 'certmanager_absent',
+          alert: 'CertManagerAbsent',
           expr: 'absent(up{job="%(certManagerJobLabel)s"})' % $._config,
           'for': '10m',
           labels: {
             severity: 'critical',
           },
           annotations: {
-            message: 'Cert Manager has dissapeared from Prometheus service discovery',
-            impact: "New certificates will not be able to be minted, and existing ones can't be renewed until cert-manager is back.",
-            action: 'Investigate why Cert Manager has stopped running, and fix. It could also be an issue with the PodMonitor CRD.',
+            summary: 'Cert Manager has dissapeared from Prometheus service discovery.',
+            description: "New certificates will not be able to be minted, and existing ones can't be renewed until cert-manager is back.",
+            runbook_url: 'https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#certmanagerabsent',
           },
         },
         {
-          alert: 'certmanager_cert_expiry_soon',
+          alert: 'CertManagerCertExpirySoon',
           expr: |||
             avg by (exported_namespace, namespace, name) (
               certmanager_certificate_expiration_timestamp_seconds - time()
-            ) < (21 * 24 * 3600) # 21 days in seconds
-          |||,
+            ) < (%s * 24 * 3600) # 21 days in seconds
+          ||| % $._config.certManagerCertExpiryDays,
           'for': '1h',
           labels: {
-            severity: 'critical',
+            severity: 'warning',
           },
           annotations: {
-            message: 'The cert `{{ $labels.name }}` is {{ $value | humanizeDuration }} from expiry, it should have renewed over a week ago',
-            impact: 'The domain that this cert covers will be unavailable after {{ $value | humanizeDuration }}',
-            action: 'Ensure cert-manager is configured correctly, no lets-encrypt rate limits are being hit. To break glass, buy a cert.',
-            dashboard: $._config.grafanaExternalUrl + '/d/TvuRo2iMk/cert-manager',
+            summary: 'The cert `{{ $labels.name }}` is {{ $value | humanizeDuration }} from expiry, it should have renewed over a week ago.',
+            description: 'The domain that this cert covers will be unavailable after {{ $value | humanizeDuration }}. Clients using endpoints that this cert protects will start to fail in {{ $value | humanizeDuration }}.',
+            dashboard_url: $._config.grafanaExternalUrl + '/d/TvuRo2iMk/cert-manager',
+            runbook_url: 'https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#CertManagerCertExpirySoon',
           },
         },
         {
-          alert: 'certmanager_cert_not_ready',
+          alert: 'CertManagerCertNotReady',
           expr: |||
             max by (name, exported_namespace, namespace, condition) (
               certmanager_certificate_ready_status{condition!="True"} == 1
@@ -46,28 +46,28 @@
             severity: 'critical',
           },
           annotations: {
-            message: 'The cert `{{ $labels.name }}` is not ready to serve traffic.',
-            impact: 'This certificate has not been ready to serve traffic for at least 10m. If the cert is being renewed or there is another valid cert, nginx _may_ be able to serve that instead.',
-            action: 'Ensure cert-manager is configured correctly, no lets-encrypt rate limits are being hit. To break glass, buy a cert.',
-            dashboard: $._config.grafanaExternalUrl + '/d/TvuRo2iMk/cert-manager',
+            summary: 'The cert `{{ $labels.name }}` is not ready to serve traffic.',
+            description: 'This certificate has not been ready to serve traffic for at least 10m. If the cert is being renewed or there is another valid cert, the ingress controller _may_ be able to serve that instead.',
+            dashboard_url: $._config.grafanaExternalUrl + '/d/TvuRo2iMk/cert-manager',
+            runbook_url: 'https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#CertManagerCertNotReady',
           },
         },
         {
-          alert: 'certmanager_cert_expiry_metric_missing',
+          alert: 'CertManagerCertExpiryMetricMissing',
           expr: 'absent(certmanager_certificate_expiration_timestamp_seconds)',
           'for': '10m',
           labels: {
-            severity: 'critical',
+            severity: 'info',
           },
           annotations: {
-            message: 'The metric used to observe cert-manager cert expiry is missing',
-            impact: 'We are blind as to whether or not we can alert on certificates expiring',
-            action: 'Assuming cert-manager is running, this is likely due to cert-manager not having permission to see certificate CRDs, a breaking change in metrics exposed, or some other misconfiguration.',
-            dashboard: $._config.grafanaExternalUrl + '/d/TvuRo2iMk/cert-manager',
+            summary: 'The metric used to observe cert-manager cert expiry is missing.',
+            description: 'We are blind as to whether or not we can alert on certificates expiring. It could also be the case that there have not had any Certificate CRDs created.',
+            dashboard_url: $._config.grafanaExternalUrl + '/d/TvuRo2iMk/cert-manager',
+            runbook_url: 'https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#CertManagerCertExpiryMetricMissing',
           },
         },
         {
-          alert: 'certmanager_hitting_rate_limits',
+          alert: 'CertManagerHittingRateLimits',
           expr: |||
             sum by (host) (
               rate(certmanager_http_acme_client_request_count{status="429"}[5m])
@@ -78,12 +78,10 @@
             severity: 'critical',
           },
           annotations: {
-            message: 'Cert manager hitting LetsEncrypt rate limits',
-            impact: 'Depending on the rate limit, cert-manager may be unable to generate certificates for up to a week.',
-            action: 'Nothing we can really do in the short term. We can apply for a rate limit adjustment for the future, but it can take weeks to approve. Thoughts and prayers.',
-            dashboard: $._config.grafanaExternalUrl + '/d/TvuRo2iMk/cert-manager',
-            link_url: 'https://docs.google.com/forms/d/e/1FAIpQLSetFLqcyPrnnrom2Kw802ZjukDVex67dOM2g4O8jEbfWFs3dA/viewform',
-            link_text: 'LetsEncrypt Rate Limit Request Form',
+            summary: 'Cert manager hitting LetsEncrypt rate limits.',
+            description: 'Depending on the rate limit, cert-manager may be unable to generate certificates for up to a week.',
+            dashboard_url: $._config.grafanaExternalUrl + '/d/TvuRo2iMk/cert-manager',
+            runbook_url: 'https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#CertManagerHittingRateLimits',
           },
         },
       ],
