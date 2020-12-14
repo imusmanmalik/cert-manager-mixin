@@ -30,7 +30,7 @@ else
 	PROMTOOL_CMD := promtool
 endif
 
-all: fmt prometheus_alerts.yaml prometheus_rules.yaml dashboards_out lint-jsonnet lint-prometheus test ## Generate files, lint and test
+all: fmt prometheus_alerts.yaml prometheus_rules.yaml dashboards_out lint-jsonnet test ## Generate files, lint and test
 
 clean: ## Clean up generated files
 	rm -rf manifests/
