@@ -1,3 +1,2 @@
 (import 'absent.libsonnet') +
-(import 'certificates.libsonnet') +
-(import 'add-runbook-links.libsonnet')
+(import 'certificates.libsonnet')
