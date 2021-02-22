@@ -1,8 +1,9 @@
 // Prometheus Mixin Config
 {
   _config+:: {
-    certManagerJobLabel: 'cert-manager',
     certManagerCertExpiryDays: '21',
+    certManagerJobLabel: 'cert-manager',
+    certManagerRunbookURLPattern: 'https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#%s',
     grafanaExternalUrl: 'https://grafana.example.com',
   },
 }
