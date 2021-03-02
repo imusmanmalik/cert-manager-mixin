@@ -5,7 +5,6 @@ A brief runbook for what to do when some of the alerts from this mixin start fir
 - [CertManagerAbsent](#certmanagerabsent)
 - [CertManagerCertExpirySoon](#certmanagercertexpirysoon)
 - [CertManagerCertNotReady](#certmanagercertnotready)
-- [CertManagerCertExpiryMetricMissing](#certmanagercertexpirymetricmissing)
 - [CertManagerHittingRateLimits](#certmanagerhittingratelimits)
 
 ## CertManagerAbsent
@@ -23,20 +22,11 @@ Ensure the certificate issuer is configured correctly. Check cert-manager logs f
 
 *NOTE: Versions of cert-manager before 0.16.0 do not remove metrics for deleted certificates. Rolling cert-manager or upgrading cert-manager should resolve this.*
 
-
 ## CertManagerCertNotReady
 
 A certificate has not been ready to serve traffic for at least 10m. Typically this means the cert is not yet signed. If the cert is being renewed or there is another valid cert, the ingress controller _should_ be able to serve that instead. If not, need to investigate why the certificate is not yet ready.
 
 Ensure cert-manager is configured correctly, no ACME/LetsEncypt rate limits are being hit. Ensure RBAC permissions are still correct for cert-manager.
-
-## CertManagerCertExpiryMetricMissing
-
-This is the metric used to determine if cert-manager certificates are expiring.
-
-There are some scenarios where this can legitimately fire. For example, if there are no Certificates CRDs in the Kubernetes cluster.
-
-To fix, ensure cert-manager has correct RBAC permissions to view certificate CRDs.
 
 ## CertManagerHittingRateLimits
 

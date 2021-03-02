@@ -20,16 +20,6 @@ tests:
         summary: 'Cert Manager has dissapeared from Prometheus service discovery.'
         description: "New certificates will not be able to be minted, and existing ones can't be renewed until cert-manager is back."
         runbook_url: 'https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#certmanagerabsent'
-  - eval_time: 10m
-    alertname: CertManagerCertExpiryMetricMissing
-    exp_alerts:
-    - exp_labels:
-        severity: info
-      exp_annotations:
-        summary: The metric used to observe cert-manager cert expiry is missing.
-        description: 'We are blind as to whether or not we can alert on certificates expiring. It could also be the case that there have not had any Certificate CRDs created.'
-        dashboard_url: https://grafana.example.com/d/TvuRo2iMk/cert-manager
-        runbook_url: 'https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#certmanagercertexpirymetricmissing'
 
 # Cert expiry
 - interval: 1m
