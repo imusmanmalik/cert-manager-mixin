@@ -42,21 +42,6 @@
           },
         },
         {
-          local alert = 'CertManagerCertExpiryMetricMissing',
-          alert: alert,
-          expr: 'absent(certmanager_certificate_expiration_timestamp_seconds)',
-          'for': '10m',
-          labels: {
-            severity: 'info',
-          },
-          annotations: {
-            summary: 'The metric used to observe cert-manager cert expiry is missing.',
-            description: 'We are blind as to whether or not we can alert on certificates expiring. It could also be the case that there have not had any Certificate CRDs created.',
-            dashboard_url: $._config.grafanaExternalUrl + '/d/TvuRo2iMk/cert-manager',
-            runbook_url: $._config.certManagerRunbookURLPattern % std.asciiLower(alert),
-          },
-        },
-        {
           local alert = 'CertManagerHittingRateLimits',
           alert: alert,
           expr: |||
