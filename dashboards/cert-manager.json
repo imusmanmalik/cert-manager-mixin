@@ -1154,9 +1154,9 @@
     "list": [
       {
         "current": {
-          "selected": true,
-          "text": "Prometheus localhost",
-          "value": "Prometheus localhost"
+          "selected": false,
+          "text": "prometheus",
+          "value": "prometheus"
         },
         "description": null,
         "error": null,
