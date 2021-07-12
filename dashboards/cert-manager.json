@@ -218,7 +218,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 148
+                "value": 100
               }
             ]
           },
@@ -229,20 +229,8 @@
             },
             "properties": [
               {
-                "id": "custom.width",
-                "value": 203
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Namespace"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 324
+                "id": "unit",
+                "value": "dateTimeAsIso"
               }
             ]
           },
