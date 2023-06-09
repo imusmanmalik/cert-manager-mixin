@@ -34,15 +34,17 @@ jobs:
     name: Test
     needs: lint
     runs-on: ubuntu-latest
-    container:
-      image: prom/prometheus:latest
-      options: --entrypoint "" --user root
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Prometheus Test
-      run: |
-        promtool check rules manifests/prometheus_rules.yaml
-        promtool check rules manifests/prometheus_alerts.yaml
-        promtool test rules tests.yaml
+    - name: Run Prometheus container
+      uses: addnab/docker-run-action@v3
+      with:
+        image: prom/prometheus:latest
+        options: --entrypoint "" --user root --volume="${{ github.workspace }}:/workspace"
+        run: |
+          cd /workspace
+          promtool check rules manifests/prometheus_rules.yaml
+          promtool check rules manifests/prometheus_alerts.yaml
+          promtool test rules tests.yaml
