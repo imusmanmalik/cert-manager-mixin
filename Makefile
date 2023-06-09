@@ -45,16 +45,14 @@ dashboards_out: mixin.libsonnet lib/dashboards.jsonnet dashboards/*.libsonnet ##
 
 lint-jsonnet:
 	$(JSONNET_FMT_CMD) --version
-	export failed=0
-	export fs='$(shell find . -name '*.jsonnet' -o -name '*.libsonnet')'
-	if [ $${#fs} -gt 0 ]; then
-		for f in $${fs}; do
-			if [ -e $${f} ]; then $(JSONNET_FMT_CMD) "$$f" | diff -u "$$f" - || export failed=1; fi
-		done
-	fi
-	if [ "$$failed" -eq 1 ]; then
-		exit 1
-	fi
+	failed=0 ;\
+	fs=$$(find . -name '*.jsonnet' -o -name '*.libsonnet') ;\
+	if [ -n "$$fs" ]; then \
+		echo $$fs | while read -r f; do \
+			if [ -e "$$f" ]; then $(JSONNET_FMT_CMD) "$$f" | diff -u "$$f" - || failed=1; fi \
+		done ;\
+	fi ;\
+	if [ $$failed -eq 1 ]; then exit 1; fi
 
 prometheus_alerts.yaml: mixin.libsonnet lib/alerts.jsonnet alerts/*.libsonnet ## Generate Alerts YAML
 	@mkdir -p manifests
