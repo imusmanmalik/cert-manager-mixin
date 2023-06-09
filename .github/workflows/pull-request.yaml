@@ -36,15 +36,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
 
-    - name: Run Prometheus container
-      uses: addnab/docker-run-action@v3
-      with:
-        image: prom/prometheus:latest
-        options: --entrypoint "" --user root --volume="${{ github.workspace }}:/workspace"
-        run: |
-          cd /workspace
-          promtool check rules manifests/prometheus_rules.yaml
-          promtool check rules manifests/prometheus_alerts.yaml
-          promtool test rules tests.yaml
+    - name: Print Docker command
+      run: |
+        echo docker run --entrypoint "" --user root --volume="${{ github.workspace }}:/workspace" prom/prometheus:latest sh -c "cd /workspace && promtool check rules manifests/prometheus_rules.yaml && promtool check rules manifests/prometheus_alerts.yaml && promtool test rules tests.yaml"
+        docker run --entrypoint "" --user root --volume="${{ github.workspace }}:/workspace" prom/prometheus:latest sh -c "cd /workspace && promtool check rules manifests/prometheus_rules.yaml && promtool check rules manifests/prometheus_alerts.yaml && promtool test rules tests.yaml"
+
