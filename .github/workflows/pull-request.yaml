@@ -30,6 +30,12 @@ jobs:
         make lint-jsonnet
         make dashboards_out prometheus_alerts.yaml prometheus_rules.yaml
 
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: manifests
+        path: ./manifests
+
   test:
     name: Test
     needs: lint
@@ -38,8 +44,20 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    - name: Print Docker command
-      run: |
-        echo docker run --entrypoint "" --user root --volume="${{ github.workspace }}:/workspace" prom/prometheus:latest sh -c "cd /workspace && promtool check rules manifests/prometheus_rules.yaml && promtool check rules manifests/prometheus_alerts.yaml && promtool test rules tests.yaml"
-        docker run --entrypoint "" --user root --volume="${{ github.workspace }}:/workspace" prom/prometheus:latest sh -c "cd /workspace && promtool check rules manifests/prometheus_rules.yaml && promtool check rules manifests/prometheus_alerts.yaml && promtool test rules tests.yaml"
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: manifests
 
+    - name: prometheus-test
+      run: |
+        docker run --entrypoint "" \
+                  --user root \
+                  --volume="${{ github.workspace }}:/workspace" \
+                  prom/prometheus:latest \
+                  sh -c "
+                      cd /workspace && \
+                      promtool check rules manifests/prometheus_rules.yaml && \
+                      promtool check rules manifests/prometheus_alerts.yaml && \
+                      promtool test rules tests.yaml
+                  "
