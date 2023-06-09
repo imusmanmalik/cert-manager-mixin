@@ -41,13 +41,18 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
 
     - name: Download artifacts
       uses: actions/download-artifact@v2
       with:
         name: manifests
+
+    - run: pwd && ls -alrth
+
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - run: pwd && ls -alrth
 
     - name: prometheus-test
       run: |
