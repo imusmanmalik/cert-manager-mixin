@@ -42,8 +42,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - run: pwd && ls -alrth
-
     - name: Checkout Code
       uses: actions/checkout@v2
 
@@ -52,8 +50,6 @@ jobs:
       with:
         name: manifests
         path: ./manifests/
-
-    - run: pwd && ls -alrth
 
     - name: prometheus-test
       run: |
