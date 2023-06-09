@@ -42,16 +42,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: Download artifacts
-      uses: actions/download-artifact@v3
-      with:
-        name: manifests
-        path: ./
-
     - run: pwd && ls -alrth
 
     - name: Checkout Code
       uses: actions/checkout@v2
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: manifests
+        path: ./manifests/
 
     - run: pwd && ls -alrth
 
