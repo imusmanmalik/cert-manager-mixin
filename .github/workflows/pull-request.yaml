@@ -30,11 +30,11 @@ jobs:
         make lint-jsonnet
         make dashboards_out prometheus_alerts.yaml prometheus_rules.yaml
 
-    - name: Archive production artifacts
+    - name: Archive manifests directory artifacts
       uses: actions/upload-artifact@v2
       with:
         name: manifests
-        path: ./manifests
+        path: ./manifests/
 
   test:
     name: Test
