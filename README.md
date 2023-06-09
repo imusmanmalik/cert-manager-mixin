@@ -34,3 +34,7 @@ To use the dashboard, it can be imported or provisioned for Grafana by grabbig t
 ## Manifests
 
 Pre rendered manifests can also be found at https://monitoring.mixins.dev/cert-manager/
+
+## Credits
+
+Since [cert-manager-mixin](https://gitlab.com/uneeq-oss/cert-manager-mixin) is not maintained anymore. This is the fork of the repository and it was imported into GitHub.

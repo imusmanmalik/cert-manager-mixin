@@ -1,0 +1,34 @@
+name: CI Release
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Release
+        id: semrel
+        uses: go-semantic-release/action@v1
+        with:
+          changelog-generator-opt: "emojis=true"
+          changelog-file: "CHANGELOG.md"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: |
+          echo "Version: ${{ steps.semrel.outputs.version }}"
+          echo "Major Version: ${{ steps.semrel.outputs.version_major }}"
+          echo "Minor Version: ${{ steps.semrel.outputs.version_minor }}"
+          echo "Patch Version: ${{ steps.semrel.outputs.version_patch }}"
+          echo "Changelog: ${{ steps.semrel.outputs.changelog }}"

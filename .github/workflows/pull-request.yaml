@@ -1,0 +1,48 @@
+name: CI Pull Request
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+env:
+  JSONNET_VERSION: "v0.16.0"
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: setup-jsonnet
+      uses: zendesk/setup-jsonnet@v11
+      with:
+        version: ${{ env.JSONNET_VERSION }}
+
+    - name: Jsonnet Lint
+      run: |
+        make lint-jsonnet
+        make dashboards_out prometheus_alerts.yaml prometheus_rules.yaml
+
+  test:
+    name: Test
+    needs: lint
+    runs-on: ubuntu-latest
+    container:
+      image: prom/prometheus:latest
+      options: --entrypoint ""
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Prometheus Test
+      run: |
+        promtool check rules manifests/prometheus_rules.yaml
+        promtool check rules manifests/prometheus_alerts.yaml
+        promtool test rules tests.yaml
