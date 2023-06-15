@@ -19,8 +19,8 @@ generate the raw yaml files for inclusion in your Prometheus installation.
 Install the `jsonnet` dependencies (tested against versions v0.20+):
 
 ```shell
-go get github.com/google/go-jsonnet/cmd/jsonnet
-go get github.com/google/go-jsonnet/cmd/jsonnetfmt
+go install github.com/google/go-jsonnet/cmd/jsonnet@latest
+go install github.com/google/go-jsonnet/cmd/jsonnetfmt@latest
 ```
 
 Generate yaml:
