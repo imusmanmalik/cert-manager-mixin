@@ -1,5 +1,7 @@
 # cert-manager Mixin
 
+[![CI Test](https://github.com/imusmanmalik/cert-manager-mixin/actions/workflows/test.yaml/badge.svg)](https://github.com/imusmanmalik/cert-manager-mixin/actions/workflows/test.yaml) [![CI Release](https://github.com/imusmanmalik/cert-manager-mixin/actions/workflows/release.yaml/badge.svg)](https://github.com/imusmanmalik/cert-manager-mixin/actions/workflows/release.yaml)
+
 The cert-manager mixin is a collection of reusable and configurable [Prometheus](https://prometheus.io/) alerts, and a [Grafana](https://grafana.com) dashboard to help with operating [cert-manager](https://cert-manager.io/).
 
 ## Config Tweaks
