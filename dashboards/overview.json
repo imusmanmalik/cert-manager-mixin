@@ -1,1232 +1,1504 @@
 {
-  annotations: {
-    list: [
-      {
-        builtIn: 1,
-        datasource: '-- Grafana --',
-        enable: true,
-        hide: true,
-        iconColor: 'rgba(0, 211, 255, 1)',
-        name: 'Annotations & Alerts',
-        type: 'dashboard',
-      },
-    ],
-  },
-  description: '',
-  editable: true,
-  gnetId: null,
-  graphTooltip: 1,
-  id: 59,
-  iteration: 1616445892702,
-  links: [ ],
-  panels: [
+  "__inputs": [],
+  "__elements": {},
+  "__requires": [
     {
-      datasource: '$datasource',
-      description: 'The number of certificates in the ready state.',
-      fieldConfig: {
-        defaults: {
-          custom: { },
-          mappings: [ ],
-          thresholds: {
-            mode: 'absolute',
-            steps: [
-              {
-                color: 'green',
-                value: null,
-              },
-              {
-                color: 'red',
-                value: 1,
-              },
-            ],
-          },
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.4.0"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
         },
-        overrides: [
-          {
-            matcher: {
-              id: 'byName',
-              options: 'True',
-            },
-            properties: [
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "uid": "$datasource"
+      },
+      "description": "The number of certificates in the ready state.",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
               {
-                id: 'thresholds',
-                value: {
-                  mode: 'absolute',
-                  steps: [
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "True"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
                     {
-                      color: 'green',
-                      value: null,
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        ],
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
       },
-      gridPos: {
-        h: 8,
-        w: 12,
-        x: 0,
-        y: 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
       },
-      id: 2,
-      options: {
-        colorMode: 'value',
-        graphMode: 'area',
-        justifyMode: 'auto',
-        orientation: 'auto',
-        reduceOptions: {
-          calcs: [
-            'lastNotNull',
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
           ],
-          fields: '',
-          values: false,
+          "fields": "",
+          "values": false
         },
-        text: { },
-        textMode: 'auto',
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
       },
-      pluginVersion: '7.4.5',
-      targets: [
+      "pluginVersion": "10.4.0",
+      "targets": [
         {
-          expr: 'sum by (condition) (certmanager_certificate_ready_status{%(certmanagerCertificateReadyStatusSelector)s })' % $._config.dashboards,
-          interval: '',
-          legendFormat: '{{ condition }}',
-          refId: 'A',
-        },
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expr": "sum by (condition) (certmanager_certificate_ready_status{ })",
+          "interval": "",
+          "legendFormat": "{{ condition }}",
+          "refId": "A"
+        }
       ],
-      timeFrom: null,
-      timeShift: null,
-      title: 'Certificates Ready',
-      type: 'stat',
+      "title": "Certificates Ready",
+      "type": "stat"
     },
     {
-      datasource: '$datasource',
-      fieldConfig: {
-        defaults: {
-          custom: { },
-          decimals: 1,
-          mappings: [ ],
-          thresholds: {
-            mode: 'absolute',
-            steps: [
+      "datasource": {
+        "uid": "$datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
               {
-                color: 'red',
-                value: null,
+                "color": "red",
+                "value": null
               },
               {
-                color: '#EAB839',
-                value: 604800,
+                "color": "#EAB839",
+                "value": 604800
               },
               {
-                color: 'green',
-                value: 1209600,
-              },
-            ],
+                "color": "green",
+                "value": 1209600
+              }
+            ]
           },
-          unit: 'dtdurations',
+          "unit": "dtdurations"
         },
-        overrides: [ ],
+        "overrides": []
       },
-      gridPos: {
-        h: 8,
-        w: 12,
-        x: 12,
-        y: 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
       },
-      id: 4,
-      options: {
-        colorMode: 'value',
-        graphMode: 'area',
-        justifyMode: 'auto',
-        orientation: 'auto',
-        reduceOptions: {
-          calcs: [
-            'lastNotNull',
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
           ],
-          fields: '',
-          values: false,
+          "fields": "",
+          "values": false
         },
-        text: { },
-        textMode: 'auto',
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
       },
-      pluginVersion: '7.4.5',
-      targets: [
+      "pluginVersion": "10.4.0",
+      "targets": [
         {
-          expr: 'min(certmanager_certificate_expiration_timestamp_seconds{%(certmanagerCertificateExpirationTimestampSecondsSelector)s } > 0) - time()' % $._config.dashboards,
-          hide: false,
-          instant: true,
-          interval: '',
-          legendFormat: '',
-          refId: 'A',
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expr": "min(certmanager_certificate_expiration_timestamp_seconds{ } > 0) - time()",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
         },
         {
-          expr: 'vector(1250000)',
-          hide: true,
-          instant: true,
-          interval: '',
-          legendFormat: '',
-          refId: 'B',
-        },
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expr": "vector(1250000)",
+          "hide": true,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
+        }
       ],
-      timeFrom: null,
-      timeShift: null,
-      title: 'Soonest Cert Expiry',
-      type: 'stat',
+      "title": "Soonest Cert Expiry",
+      "type": "stat"
     },
     {
-      datasource: '$datasource',
-      description: 'Status of the certificates. Values are True, False or Unknown.',
-      fieldConfig: {
-        defaults: {
-          custom: {
-            align: null,
-            filterable: false,
+      "datasource": {
+        "uid": "$datasource"
+      },
+      "description": "Status of the certificates. Values are True, False or Unknown.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
           },
-          mappings: [
+          "mappings": [
             {
-              from: '',
-              id: 0,
-              operator: '',
-              text: 'Yes',
-              to: '',
-              type: 1,
-              value: '',
-            },
+              "options": {
+                "": {
+                  "text": "Yes"
+                }
+              },
+              "type": "value"
+            }
           ],
-          thresholds: {
-            mode: 'absolute',
-            steps: [
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
               {
-                color: 'green',
-                value: null,
+                "color": "green",
+                "value": null
               },
               {
-                color: 'red',
-                value: 80,
-              },
-            ],
+                "color": "red",
+                "value": 80
+              }
+            ]
           },
-          unit: 'none',
+          "unit": "none"
         },
-        overrides: [
+        "overrides": [
           {
-            matcher: {
-              id: 'byName',
-              options: 'Ready Status',
+            "matcher": {
+              "id": "byName",
+              "options": "Ready Status"
             },
-            properties: [
+            "properties": [
               {
-                id: 'custom.width',
-                value: 100,
-              },
-            ],
-          },
-          {
-            matcher: {
-              id: 'byName',
-              options: 'Valid Until',
-            },
-            properties: [
-              {
-                id: 'unit',
-                value: 'dateTimeAsIso',
-              },
-            ],
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
           },
           {
-            matcher: {
-              id: 'byName',
-              options: 'Valid Until',
+            "matcher": {
+              "id": "byName",
+              "options": "Valid Until"
             },
-            properties: [
+            "properties": [
               {
-                id: 'unit',
-                value: 'dateTimeAsIso',
-              },
-            ],
+                "id": "unit",
+                "value": "dateTimeAsIso"
+              }
+            ]
           },
-        ],
-      },
-      gridPos: {
-        h: 8,
-        w: 12,
-        x: 0,
-        y: 8,
-      },
-      id: 9,
-      options: {
-        showHeader: true,
-        sortBy: [
           {
-            desc: false,
-            displayName: 'Valid Until',
-          },
-        ],
-      },
-      pluginVersion: '7.4.5',
-      targets: [
-        {
-          expr: 'label_join(avg by (name, namespace, condition, exported_namespace) (certmanager_certificate_ready_status{%(certmanagerCertificateReadyStatusSelector)s } == 1), "namespaced_name", "-", "namespace", "exported_namespace", "name")' % $._config.dashboards,
-          format: 'table',
-          instant: true,
-          interval: '',
-          legendFormat: '',
-          refId: 'A',
-        },
-        {
-          expr: 'label_join(avg by (name, namespace, exported_namespace) (certmanager_certificate_expiration_timestamp_seconds{%(certmanagerCertificateExpirationTimestampSecondsSelector)s }) * 1000, "namespaced_name", "-", "namespace", "exported_namespace", "name")' % $._config.dashboards,
-          format: 'table',
-          instant: true,
-          interval: '',
-          legendFormat: '',
-          refId: 'B',
-        },
-      ],
-      timeFrom: null,
-      timeShift: null,
-      title: 'Certificates',
-      transformations: [
-        {
-          id: 'seriesToColumns',
-          options: {
-            byField: 'namespaced_name',
-          },
-        },
-        {
-          id: 'organize',
-          options: {
-            excludeByName: {
-              Time: true,
-              'Time 1': true,
-              'Time 2': true,
-              'Value #A': true,
-              exported_namespace: false,
-              'exported_namespace 1': false,
-              'exported_namespace 2': true,
-              'name 1': true,
-              namespaced_name: true,
-              'namespace 2': true,
+            "matcher": {
+              "id": "byName",
+              "options": "Valid Until"
             },
-            indexByName: {
-              'Time 1': 8,
-              'Time 2': 10,
-              'Value #A': 6,
-              'Value #B': 5,
-              condition: 4,
-              'exported_namespace 1': 1,
-              'exported_namespace 2': 11,
-              'name 1': 9,
-              'name 2': 3,
-              namespace: 0,
-              namespaced_name: 7,
-              'namespace 1': 2,
-            },
-            renameByName: {
-              'Time 1': '',
-              'Value #B': 'Valid Until',
-              condition: 'Ready Status',
-              exported_namespace: 'Certificate Namespace',
-              'exported_namespace 1': 'Certificate Namespace',
-              'exported_namespace 2': '',
-              name: 'Certificate',
-              'name 2': 'Certificate',
-              namespace: 'Namespace',
-              namespaced_name: '',
-              'namespace 1': 'Namespace',
-            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dateTimeAsIso"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 9,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "Valid Until"
+          }
+        ]
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
           },
+          "expr": "label_join(avg by (name, namespace, condition, exported_namespace) (certmanager_certificate_ready_status{ } == 1), \"namespaced_name\", \"-\", \"namespace\", \"exported_namespace\", \"name\")",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
         },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expr": "label_join(avg by (name, namespace, exported_namespace) (certmanager_certificate_expiration_timestamp_seconds{ }) * 1000, \"namespaced_name\", \"-\", \"namespace\", \"exported_namespace\", \"name\")",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
+        }
       ],
-      type: 'table',
+      "title": "Certificates",
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "namespaced_name"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Time 1": true,
+              "Time 2": true,
+              "Value #A": true,
+              "exported_namespace": false,
+              "exported_namespace 1": false,
+              "exported_namespace 2": true,
+              "name 1": true,
+              "namespace 2": true,
+              "namespaced_name": true
+            },
+            "indexByName": {
+              "Time 1": 8,
+              "Time 2": 10,
+              "Value #A": 6,
+              "Value #B": 5,
+              "condition": 4,
+              "exported_namespace 1": 1,
+              "exported_namespace 2": 11,
+              "name 1": 9,
+              "name 2": 3,
+              "namespace": 0,
+              "namespace 1": 2,
+              "namespaced_name": 7
+            },
+            "renameByName": {
+              "Time 1": "",
+              "Value #B": "Valid Until",
+              "condition": "Ready Status",
+              "exported_namespace": "Certificate Namespace",
+              "exported_namespace 1": "Certificate Namespace",
+              "exported_namespace 2": "",
+              "name": "Certificate",
+              "name 2": "Certificate",
+              "namespace": "Namespace",
+              "namespace 1": "Namespace",
+              "namespaced_name": ""
+            }
+          }
+        }
+      ],
+      "type": "table"
     },
     {
-      aliasColors: { },
-      bars: false,
-      dashLength: 10,
-      dashes: false,
-      datasource: '$datasource',
-      description: 'The rate of controller sync requests.',
-      fieldConfig: {
-        defaults: {
-          custom: { },
-          links: [ ],
+      "datasource": {
+        "uid": "$datasource"
+      },
+      "description": "The rate of controller sync requests.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "reqps"
         },
-        overrides: [ ],
+        "overrides": []
       },
-      fill: 1,
-      fillGradient: 0,
-      gridPos: {
-        h: 8,
-        w: 12,
-        x: 12,
-        y: 8,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
       },
-      hiddenSeries: false,
-      id: 7,
-      interval: '20s',
-      legend: {
-        avg: false,
-        current: false,
-        max: false,
-        min: false,
-        show: true,
-        total: false,
-        values: false,
+      "id": 7,
+      "interval": "20s",
+      "maxDataPoints": 250,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      lines: true,
-      linewidth: 1,
-      maxDataPoints: 250,
-      nullPointMode: 'null',
-      options: {
-        alertThreshold: true,
-      },
-      percentage: false,
-      pluginVersion: '7.4.5',
-      pointradius: 2,
-      points: false,
-      renderer: 'flot',
-      seriesOverrides: [ ],
-      spaceLength: 10,
-      stack: false,
-      steppedLine: false,
-      targets: [
+      "pluginVersion": "10.4.0",
+      "targets": [
         {
-          expr: 'sum by (controller) (\n  rate(certmanager_controller_sync_call_count{%(certmanagerControllerSyncCallCountSelector)s }[$__rate_interval ])\n)' % $._config.dashboards,
-          interval: '',
-          legendFormat: '{{ controller }}',
-          refId: 'A',
-        },
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expr": "sum by (controller) (\n  rate(certmanager_controller_sync_call_count{ }[$__rate_interval ])\n)",
+          "interval": "",
+          "legendFormat": "{{ controller }}",
+          "refId": "A"
+        }
       ],
-      thresholds: [ ],
-      timeFrom: null,
-      timeRegions: [ ],
-      timeShift: null,
-      title: 'Controller Sync Requests/sec',
-      tooltip: {
-        shared: true,
-        sort: 0,
-        value_type: 'individual',
-      },
-      type: 'graph',
-      xaxis: {
-        buckets: null,
-        mode: 'time',
-        name: null,
-        show: true,
-        values: [ ],
-      },
-      yaxes: [
-        {
-          format: 'reqps',
-          label: null,
-          logBase: 1,
-          max: null,
-          min: '0',
-          show: true,
-        },
-        {
-          format: 'short',
-          label: null,
-          logBase: 1,
-          max: null,
-          min: null,
-          show: true,
-        },
-      ],
-      yaxis: {
-        align: false,
-        alignLevel: null,
-      },
+      "title": "Controller Sync Requests/sec",
+      "type": "timeseries"
     },
     {
-      aliasColors: { },
-      bars: false,
-      dashLength: 10,
-      dashes: false,
-      datasource: '$datasource',
-      description: 'Rate of requests to ACME provider.',
-      fieldConfig: {
-        defaults: {
-          custom: { },
-          links: [ ],
+      "datasource": {
+        "uid": "$datasource"
+      },
+      "description": "Rate of requests to ACME provider.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "reqps"
         },
-        overrides: [ ],
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byValue",
+              "options": {
+                "op": "gte",
+                "reducer": "allIsNull",
+                "value": 0
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": true,
+                  "tooltip": true,
+                  "viz": false
+                }
+              }
+            ]
+          }
+        ]
       },
-      fill: 1,
-      fillGradient: 0,
-      gridPos: {
-        h: 8,
-        w: 12,
-        x: 0,
-        y: 16,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
       },
-      hiddenSeries: false,
-      id: 6,
-      interval: '20s',
-      legend: {
-        avg: false,
-        current: false,
-        hideEmpty: true,
-        hideZero: false,
-        max: false,
-        min: false,
-        show: true,
-        total: false,
-        values: false,
+      "id": 6,
+      "interval": "20s",
+      "maxDataPoints": 250,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      lines: true,
-      linewidth: 1,
-      maxDataPoints: 250,
-      nullPointMode: 'null',
-      options: {
-        alertThreshold: true,
-      },
-      percentage: false,
-      pluginVersion: '7.4.5',
-      pointradius: 2,
-      points: false,
-      renderer: 'flot',
-      seriesOverrides: [ ],
-      spaceLength: 10,
-      stack: false,
-      steppedLine: false,
-      targets: [
+      "pluginVersion": "10.4.0",
+      "targets": [
         {
-          expr: 'sum by (method, path, status) (\n  rate(certmanager_http_acme_client_request_count{%(certmanagerHttpAcmeClientRequestCountSelector)s }[$__rate_interval ])\n)' % $._config.dashboards,
-          interval: '',
-          legendFormat: '{{ method }} {{ path }} {{ status }}',
-          refId: 'A',
-        },
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expr": "sum by (method, path, status) (\n  rate(certmanager_http_acme_client_request_count{ }[$__rate_interval ])\n)",
+          "interval": "",
+          "legendFormat": "{{ method }} {{ path }} {{ status }}",
+          "refId": "A"
+        }
       ],
-      thresholds: [ ],
-      timeFrom: null,
-      timeRegions: [ ],
-      timeShift: null,
-      title: 'ACME HTTP Requests/sec',
-      tooltip: {
-        shared: true,
-        sort: 0,
-        value_type: 'individual',
-      },
-      type: 'graph',
-      xaxis: {
-        buckets: null,
-        mode: 'time',
-        name: null,
-        show: true,
-        values: [ ],
-      },
-      yaxes: [
-        {
-          format: 'reqps',
-          label: null,
-          logBase: 1,
-          max: null,
-          min: '0',
-          show: true,
-        },
-        {
-          format: 'short',
-          label: null,
-          logBase: 1,
-          max: null,
-          min: null,
-          show: true,
-        },
-      ],
-      yaxis: {
-        align: false,
-        alignLevel: null,
-      },
+      "title": "ACME HTTP Requests/sec",
+      "type": "timeseries"
     },
     {
-      aliasColors: { },
-      bars: false,
-      dashLength: 10,
-      dashes: false,
-      datasource: '$datasource',
-      description: 'Average duration of requests to ACME provider. ',
-      fieldConfig: {
-        defaults: {
-          custom: { },
-          links: [ ],
+      "datasource": {
+        "uid": "$datasource"
+      },
+      "description": "Average duration of requests to ACME provider. ",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
         },
-        overrides: [ ],
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byValue",
+              "options": {
+                "op": "gte",
+                "reducer": "allIsNull",
+                "value": 0
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": true,
+                  "tooltip": true,
+                  "viz": false
+                }
+              }
+            ]
+          }
+        ]
       },
-      fill: 1,
-      fillGradient: 0,
-      gridPos: {
-        h: 8,
-        w: 12,
-        x: 12,
-        y: 16,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 16
       },
-      hiddenSeries: false,
-      id: 10,
-      interval: '30s',
-      legend: {
-        avg: false,
-        current: false,
-        hideEmpty: true,
-        hideZero: false,
-        max: false,
-        min: false,
-        show: true,
-        total: false,
-        values: false,
+      "id": 10,
+      "interval": "30s",
+      "maxDataPoints": 250,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      lines: true,
-      linewidth: 1,
-      maxDataPoints: 250,
-      nullPointMode: 'null',
-      options: {
-        alertThreshold: true,
-      },
-      percentage: false,
-      pluginVersion: '7.4.5',
-      pointradius: 2,
-      points: false,
-      renderer: 'flot',
-      seriesOverrides: [ ],
-      spaceLength: 10,
-      stack: false,
-      steppedLine: false,
-      targets: [
+      "pluginVersion": "10.4.0",
+      "targets": [
         {
-          expr: 'sum by (method, path, status) (rate(certmanager_http_acme_client_request_duration_seconds_sum{%(certmanagerHttpAcmeClientRequestDurationSecondsSumSelector)s }[$__rate_interval ]))\n/\nsum by (method, path, status) (rate(certmanager_http_acme_client_request_duration_seconds_count{%(certmanagerHttpAcmeClientRequestDurationSecondsCountSelector)s }[$__rate_interval ]))' % $._config.dashboards,
-          interval: '',
-          legendFormat: '{{ method }} {{ path }} {{ status }}',
-          refId: 'A',
-        },
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expr": "sum by (method, path, status) (rate(certmanager_http_acme_client_request_duration_seconds_sum{ }[$__rate_interval ]))\n/\nsum by (method, path, status) (rate(certmanager_http_acme_client_request_duration_seconds_count{ }[$__rate_interval ]))",
+          "interval": "",
+          "legendFormat": "{{ method }} {{ path }} {{ status }}",
+          "refId": "A"
+        }
       ],
-      thresholds: [ ],
-      timeFrom: null,
-      timeRegions: [ ],
-      timeShift: null,
-      title: 'ACME HTTP Request avg duration',
-      tooltip: {
-        shared: true,
-        sort: 0,
-        value_type: 'individual',
-      },
-      type: 'graph',
-      xaxis: {
-        buckets: null,
-        mode: 'time',
-        name: null,
-        show: true,
-        values: [ ],
-      },
-      yaxes: [
-        {
-          format: 's',
-          label: null,
-          logBase: 1,
-          max: null,
-          min: '0',
-          show: true,
-        },
-        {
-          format: 'short',
-          label: null,
-          logBase: 1,
-          max: null,
-          min: null,
-          show: true,
-        },
-      ],
-      yaxis: {
-        align: false,
-        alignLevel: null,
-      },
+      "title": "ACME HTTP Request avg duration",
+      "type": "timeseries"
     },
     {
-      aliasColors: {
-        max: 'dark-yellow',
+      "datasource": {
+        "uid": "$datasource"
       },
-      bars: false,
-      dashLength: 10,
-      dashes: false,
-      datasource: '$datasource',
-      description: 'CPU Usage and limits, as percent of a vCPU core. ',
-      fieldConfig: {
-        defaults: {
-          custom: { },
-          links: [ ],
+      "description": "CPU Usage and limits, as percent of a vCPU core. ",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
         },
-        overrides: [ ],
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "max"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CPU"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 10
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 50
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/Request.*/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#FF9830",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/Limit.*/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#F2495C",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              }
+            ]
+          }
+        ]
       },
-      fill: 0,
-      fillGradient: 0,
-      gridPos: {
-        h: 8,
-        w: 6,
-        x: 0,
-        y: 24,
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 24
       },
-      hiddenSeries: false,
-      id: 12,
-      interval: '1m',
-      legend: {
-        avg: false,
-        current: false,
-        max: false,
-        min: false,
-        show: true,
-        total: false,
-        values: false,
+      "id": 12,
+      "interval": "1m",
+      "maxDataPoints": 250,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      lines: true,
-      linewidth: 1,
-      links: [ ],
-      maxDataPoints: 250,
-      nullPointMode: 'null',
-      options: {
-        alertThreshold: true,
-      },
-      percentage: false,
-      pluginVersion: '7.4.5',
-      pointradius: 2,
-      points: false,
-      renderer: 'flot',
-      seriesOverrides: [
+      "pluginVersion": "10.4.0",
+      "targets": [
         {
-          alias: 'CPU',
-          fill: 1,
-          fillGradient: 5,
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expr": "avg by (pod) (rate(container_cpu_usage_seconds_total{container=\"cert-manager\" }[$__rate_interval ]))",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "CPU {{ pod }}",
+          "refId": "A"
         },
         {
-          alias: '/Request.*/',
-          color: '#FF9830',
-          dashes: true,
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expr": "avg by (pod) (kube_pod_container_resource_limits_cpu_cores{container=\"cert-manager\" })",
+          "format": "time_series",
+          "hide": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Limit {{ pod }}",
+          "refId": "B"
         },
         {
-          alias: '/Limit.*/',
-          color: '#F2495C',
-          dashes: true,
-        },
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expr": "avg by (pod) (kube_pod_container_resource_requests_cpu_cores{container=\"cert-manager\" })",
+          "format": "time_series",
+          "hide": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Request {{ pod }}",
+          "refId": "C"
+        }
       ],
-      spaceLength: 10,
-      stack: false,
-      steppedLine: false,
-      targets: [
-        {
-          expr: 'avg by (pod) (rate(container_cpu_usage_seconds_total{%(containerCPUUsageSecondsTotalSelector)s }[$__rate_interval ]))' % $._config.dashboards,
-          format: 'time_series',
-          hide: false,
-          interval: '',
-          intervalFactor: 2,
-          legendFormat: 'CPU {{ pod }}',
-          refId: 'A',
-        },
-        {
-          expr: 'avg by (pod) (kube_pod_container_resource_limits_cpu_cores{%(kubePodContainerResourceLimitsCpuCoresSelector)s })' % $._config.dashboards,
-          format: 'time_series',
-          hide: true,
-          interval: '',
-          intervalFactor: 1,
-          legendFormat: 'Limit {{ pod }}',
-          refId: 'B',
-        },
-        {
-          expr: 'avg by (pod) (kube_pod_container_resource_requests_cpu_cores{%(kubePodContainerResourceRequestsCpuCoresSelector)s })' % $._config.dashboards,
-          format: 'time_series',
-          hide: true,
-          interval: '',
-          intervalFactor: 1,
-          legendFormat: 'Request {{ pod }}',
-          refId: 'C',
-        },
-      ],
-      thresholds: [ ],
-      timeFrom: null,
-      timeRegions: [ ],
-      timeShift: null,
-      title: 'CPU',
-      tooltip: {
-        shared: true,
-        sort: 0,
-        value_type: 'individual',
-      },
-      type: 'graph',
-      xaxis: {
-        buckets: null,
-        mode: 'time',
-        name: null,
-        show: true,
-        values: [ ],
-      },
-      yaxes: [
-        {
-          format: 'percentunit',
-          label: null,
-          logBase: 1,
-          max: null,
-          min: '0',
-          show: true,
-        },
-        {
-          format: 'short',
-          label: null,
-          logBase: 1,
-          max: null,
-          min: null,
-          show: true,
-        },
-      ],
-      yaxis: {
-        align: false,
-        alignLevel: null,
-      },
+      "title": "CPU",
+      "type": "timeseries"
     },
     {
-      aliasColors: {
-        max: 'dark-yellow',
+      "datasource": {
+        "uid": "$datasource"
       },
-      bars: false,
-      dashLength: 10,
-      dashes: false,
-      datasource: '$datasource',
-      description: 'Percent of the time that the CPU is being throttled. Higher is badderer. ',
-      fieldConfig: {
-        defaults: {
-          custom: { },
-          links: [ ],
+      "description": "Percent of the time that the CPU is being throttled. Higher is badderer. ",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
         },
-        overrides: [ ],
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "max"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/external-dns.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 10
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 50
+              }
+            ]
+          }
+        ]
       },
-      fill: 0,
-      fillGradient: 0,
-      gridPos: {
-        h: 8,
-        w: 6,
-        x: 6,
-        y: 24,
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 24
       },
-      hiddenSeries: false,
-      id: 14,
-      interval: '1m',
-      legend: {
-        avg: false,
-        current: false,
-        max: false,
-        min: false,
-        show: true,
-        total: false,
-        values: false,
+      "id": 14,
+      "interval": "1m",
+      "maxDataPoints": 250,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      lines: true,
-      linewidth: 1,
-      links: [ ],
-      maxDataPoints: 250,
-      nullPointMode: 'connected',
-      options: {
-        alertThreshold: true,
-      },
-      percentage: false,
-      pluginVersion: '7.4.5',
-      pointradius: 2,
-      points: false,
-      renderer: 'flot',
-      seriesOverrides: [
+      "pluginVersion": "10.4.0",
+      "targets": [
         {
-          alias: '/external-dns.*/',
-          fill: 1,
-          fillGradient: 5,
-        },
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expr": "avg by (pod) (\n  rate(container_cpu_cfs_throttled_periods_total{container=\"cert-manager\" }[$__rate_interval ])\n  /\n  rate(container_cpu_cfs_periods_total{container=\"cert-manager\" }[$__rate_interval ])\n)",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{ pod }}",
+          "refId": "A"
+        }
       ],
-      spaceLength: 10,
-      stack: false,
-      steppedLine: false,
-      targets: [
-        {
-          expr: 'avg by (pod) (\n  rate(container_cpu_cfs_throttled_periods_total{%(containerCpuCfsThrottledPeriodsTotalSelector)s }[$__rate_interval ])\n  /\n  rate(container_cpu_cfs_periods_total{%(containerCpuCfsPeriodsTotalSelector)s }[$__rate_interval ])\n)' % $._config.dashboards,
-          format: 'time_series',
-          hide: false,
-          interval: '',
-          intervalFactor: 2,
-          legendFormat: '{{ pod }}',
-          refId: 'A',
-        },
-      ],
-      thresholds: [ ],
-      timeFrom: null,
-      timeRegions: [ ],
-      timeShift: null,
-      title: 'CPU Throttling',
-      tooltip: {
-        shared: true,
-        sort: 0,
-        value_type: 'individual',
-      },
-      type: 'graph',
-      xaxis: {
-        buckets: null,
-        mode: 'time',
-        name: null,
-        show: true,
-        values: [ ],
-      },
-      yaxes: [
-        {
-          format: 'percentunit',
-          label: null,
-          logBase: 1,
-          max: null,
-          min: '0',
-          show: true,
-        },
-        {
-          format: 'short',
-          label: null,
-          logBase: 1,
-          max: null,
-          min: null,
-          show: true,
-        },
-      ],
-      yaxis: {
-        align: false,
-        alignLevel: null,
-      },
+      "title": "CPU Throttling",
+      "type": "timeseries"
     },
     {
-      aliasColors: {
-        max: 'dark-yellow',
+      "datasource": {
+        "uid": "$datasource"
       },
-      bars: false,
-      dashLength: 10,
-      dashes: false,
-      datasource: '$datasource',
-      description: 'Memory utilisation and limits.',
-      fieldConfig: {
-        defaults: {
-          custom: { },
-          links: [ ],
+      "description": "Memory utilisation and limits.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
         },
-        overrides: [ ],
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "max"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Memory"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 10
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 50
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Request"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#FF9830",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Limit"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#F2495C",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              }
+            ]
+          }
+        ]
       },
-      fill: 0,
-      fillGradient: 0,
-      gridPos: {
-        h: 8,
-        w: 6,
-        x: 12,
-        y: 24,
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 24
       },
-      hiddenSeries: false,
-      id: 16,
-      interval: '1m',
-      legend: {
-        avg: false,
-        current: false,
-        max: false,
-        min: false,
-        show: true,
-        total: false,
-        values: false,
+      "id": 16,
+      "interval": "1m",
+      "maxDataPoints": 250,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      lines: true,
-      linewidth: 1,
-      links: [ ],
-      maxDataPoints: 250,
-      nullPointMode: 'null',
-      options: {
-        alertThreshold: true,
-      },
-      percentage: false,
-      pluginVersion: '7.4.5',
-      pointradius: 2,
-      points: false,
-      renderer: 'flot',
-      seriesOverrides: [
+      "pluginVersion": "10.4.0",
+      "targets": [
         {
-          alias: 'Memory',
-          fill: 1,
-          fillGradient: 5,
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expr": "avg by (pod) (container_memory_usage_bytes{container=\"cert-manager\" })",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Memory {{ pod }}",
+          "refId": "A"
         },
         {
-          alias: 'Request',
-          color: '#FF9830',
-          dashes: true,
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expr": "avg by (pod) (kube_pod_container_resource_limits_memory_bytes{container=\"cert-manager\" })",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Limit {{ pod }}",
+          "refId": "B"
         },
         {
-          alias: 'Limit',
-          color: '#F2495C',
-          dashes: true,
-        },
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expr": "avg by (pod) (kube_pod_container_resource_requests_memory_bytes{container=\"cert-manager\" })",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Request {{ pod }}",
+          "refId": "C"
+        }
       ],
-      spaceLength: 10,
-      stack: false,
-      steppedLine: false,
-      targets: [
-        {
-          expr: 'avg by (pod) (container_memory_usage_bytes{%(containerMemoryUsageBytesSelector)s })' % $._config.dashboards,
-          format: 'time_series',
-          hide: false,
-          interval: '',
-          intervalFactor: 1,
-          legendFormat: 'Memory {{ pod }}',
-          refId: 'A',
-        },
-        {
-          expr: 'avg by (pod) (kube_pod_container_resource_limits_memory_bytes{%(kubePodContainerResourceLimitsMemoryBytesSelector)s })' % $._config.dashboards,
-          format: 'time_series',
-          interval: '',
-          intervalFactor: 1,
-          legendFormat: 'Limit {{ pod }}',
-          refId: 'B',
-        },
-        {
-          expr: 'avg by (pod) (kube_pod_container_resource_requests_memory_bytes{%(kubePodContainerResourceRequestsMemoryBytesSelector)s })' % $._config.dashboards,
-          format: 'time_series',
-          interval: '',
-          intervalFactor: 1,
-          legendFormat: 'Request {{ pod }}',
-          refId: 'C',
-        },
-      ],
-      thresholds: [ ],
-      timeFrom: null,
-      timeRegions: [ ],
-      timeShift: null,
-      title: 'Memory',
-      tooltip: {
-        shared: true,
-        sort: 0,
-        value_type: 'individual',
-      },
-      type: 'graph',
-      xaxis: {
-        buckets: null,
-        mode: 'time',
-        name: null,
-        show: true,
-        values: [ ],
-      },
-      yaxes: [
-        {
-          format: 'bytes',
-          label: null,
-          logBase: 1,
-          max: null,
-          min: '0',
-          show: true,
-        },
-        {
-          format: 'short',
-          label: null,
-          logBase: 1,
-          max: null,
-          min: null,
-          show: true,
-        },
-      ],
-      yaxis: {
-        align: false,
-        alignLevel: null,
-      },
+      "title": "Memory",
+      "type": "timeseries"
     },
     {
-      aliasColors: {
-        max: 'dark-yellow',
+      "datasource": {
+        "uid": "$datasource"
       },
-      bars: false,
-      dashLength: 10,
-      dashes: false,
-      datasource: '$datasource',
-      description: 'Network ingress/egress.',
-      fieldConfig: {
-        defaults: {
-          custom: { },
-          links: [ ],
+      "description": "Network ingress/egress.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 50,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Bps"
         },
-        overrides: [ ],
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "max"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "transmit"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
       },
-      fill: 1,
-      fillGradient: 5,
-      gridPos: {
-        h: 8,
-        w: 6,
-        x: 18,
-        y: 24,
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 24
       },
-      hiddenSeries: false,
-      id: 18,
-      interval: '1m',
-      legend: {
-        avg: false,
-        current: false,
-        max: false,
-        min: false,
-        show: true,
-        total: false,
-        values: false,
+      "id": 18,
+      "interval": "1m",
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      lines: true,
-      linewidth: 1,
-      links: [ ],
-      nullPointMode: 'null',
-      options: {
-        alertThreshold: true,
-      },
-      percentage: false,
-      pluginVersion: '7.4.5',
-      pointradius: 2,
-      points: false,
-      renderer: 'flot',
-      seriesOverrides: [
+      "pluginVersion": "10.4.0",
+      "targets": [
         {
-          alias: 'transmit',
-          transform: 'negative-Y',
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expr": "avg(\n  sum without (interface) (\n    rate(container_network_receive_bytes_total{namespace=\"cert-manager\" }[$__rate_interval ])\n  )\n)",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "receive",
+          "refId": "A"
         },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expr": "avg(\n  sum without (interface) (\n    rate(container_network_transmit_bytes_total{namespace=\"cert-manager\" }[$__rate_interval ])\n  )\n)",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "transmit",
+          "refId": "B"
+        }
       ],
-      spaceLength: 10,
-      stack: false,
-      steppedLine: false,
-      targets: [
-        {
-          expr: 'avg(\n  sum without (interface) (\n    rate(container_network_receive_bytes_total{%(containerNetworkReceiveBytesTotalSelector)s }[$__rate_interval ])\n  )\n)' % $._config.dashboards,
-          format: 'time_series',
-          hide: false,
-          interval: '',
-          intervalFactor: 2,
-          legendFormat: 'receive',
-          refId: 'A',
-        },
-        {
-          expr: 'avg(\n  sum without (interface) (\n    rate(container_network_transmit_bytes_total{%(containerNetworkTransmitBytesTotalSelector)s }[$__rate_interval ])\n  )\n)' % $._config.dashboards,
-          format: 'time_series',
-          hide: false,
-          interval: '',
-          intervalFactor: 2,
-          legendFormat: 'transmit',
-          refId: 'B',
-        },
-      ],
-      thresholds: [ ],
-      timeFrom: null,
-      timeRegions: [ ],
-      timeShift: null,
-      title: 'Network',
-      tooltip: {
-        shared: true,
-        sort: 0,
-        value_type: 'individual',
-      },
-      type: 'graph',
-      xaxis: {
-        buckets: null,
-        mode: 'time',
-        name: null,
-        show: true,
-        values: [ ],
-      },
-      yaxes: [
-        {
-          format: 'Bps',
-          label: null,
-          logBase: 1,
-          max: null,
-          min: null,
-          show: true,
-        },
-        {
-          format: 'short',
-          label: null,
-          logBase: 1,
-          max: null,
-          min: null,
-          show: true,
-        },
-      ],
-      yaxis: {
-        align: false,
-        alignLevel: null,
-      },
-    },
+      "title": "Network",
+      "type": "timeseries"
+    }
   ],
-  refresh: '1m',
-  schemaVersion: 27,
-  style: 'dark',
-  tags: [
-    'cert-manager',
-    'infra',
+  "refresh": "1m",
+  "schemaVersion": 39,
+  "tags": [
+    "cert-manager",
+    "infra"
   ],
-  templating: {
-    list: [
+  "templating": {
+    "list": [
       {
-        current: {
-          selected: false,
-          text: 'prometheus',
-          value: 'prometheus',
+        "current": {
+          "selected": false,
+          "text": "Prometheus",
+          "value": "prometheus"
         },
-        description: null,
-        'error': null,
-        hide: 0,
-        includeAll: false,
-        label: 'Data Source',
-        multi: false,
-        name: 'datasource',
-        options: [ ],
-        query: 'prometheus',
-        queryValue: '',
-        refresh: 1,
-        regex: '',
-        skipUrlSync: false,
-        type: 'datasource',
+        "hide": 0,
+        "includeAll": false,
+        "label": "Data Source",
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
       },
       {
-        current: {
-          selected: false,
-          text: '',
-          value: '',
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "$datasource"
         },
-        datasource: {
-          type: 'prometheus',
-          uid: '$datasource',
+        "definition": "",
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "cluster",
+        "options": [],
+        "query": {
+          "query": "label_values(certmanager_certificate_ready_status{ }, cluster)",
+          "refId": "Prometheus-cluster-Variable-Query"
         },
-        definition: '',
-        hide: if $._config.dashboards.enableMultiCluster then 0 else 2,
-        includeAll: false,
-        multi: false,
-        name: 'cluster',
-        options: [ ],
-        query: {
-          query: 'label_values(certmanager_certificate_ready_status{%(clusterVariableSelector)s }, cluster)' % $._config.dashboards,
-          refId: 'Prometheus-cluster-Variable-Query',
-        },
-        refresh: 2,
-        regex: '',
-        skipUrlSync: false,
-        sort: 0,
-        tagValuesQuery: '',
-        tagsQuery: '',
-        type: 'query',
-        useTags: false,
-      },
-    ],
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
-  time: {
-    from: 'now-24h',
-    to: 'now',
+  "time": {
+    "from": "now-24h",
+    "to": "now"
   },
-  timepicker: {
-    refresh_intervals: [
-      '10s',
-      '30s',
-      '1m',
-      '5m',
-      '15m',
-      '30m',
-      '1h',
-      '2h',
-      '1d',
-    ],
+  "timepicker": {
+    "refresh_intervals": [
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
   },
-  timezone: '',
-  title: 'Cert Manager / Overview',
-  uid: 'TvuRo2iMk',
-  version: 1,
+  "timezone": "",
+  "title": "Cert Manager / Overview",
+  "uid": "TvuRo2iMk",
+  "version": 3,
+  "weekStart": ""
 }
