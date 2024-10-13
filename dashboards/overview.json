@@ -1400,7 +1400,7 @@
           "datasource": {
             "uid": "$datasource"
           },
-          "expr": "avg(\n  sum without (interface) (\n    rate(container_network_receive_bytes_total{%(containerNetworkReceiveBytesTotalSelector)s}[$__rate_interval ])\n  )\n)",
+          "expr": "avg(\n  sum without (interface) (\n    rate(container_network_receive_bytes_total{%(containerNetworkReceiveBytesTotalSelector)s}[$__rate_interval ])\n  )\n)" % $._config.dashboards,
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1412,7 +1412,7 @@
           "datasource": {
             "uid": "$datasource"
           },
-          "expr": "avg(\n  sum without (interface) (\n    rate(container_network_transmit_bytes_total{%(containerNetworkTransmitBytesTotalSelector)s}[$__rate_interval ])\n  )\n)",
+          "expr": "avg(\n  sum without (interface) (\n    rate(container_network_transmit_bytes_total{%(containerNetworkTransmitBytesTotalSelector)s}[$__rate_interval ])\n  )\n)" % $._config.dashboards,
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1465,7 +1465,7 @@
         "name": "cluster",
         "options": [],
         "query": {
-          "query": "label_values(certmanager_certificate_ready_status{%(clusterVariableSelector)s}, cluster)",
+          "query": "label_values(certmanager_certificate_ready_status{%(clusterVariableSelector)s}, cluster)" % $._config.dashboards,
           "refId": "Prometheus-cluster-Variable-Query"
         },
         "refresh": 2,
