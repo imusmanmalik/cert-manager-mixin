@@ -1459,7 +1459,7 @@
           "uid": "$datasource"
         },
         "definition": "",
-        "hide": 2,
+        "hide": if $._config.dashboards.enableMultiCluster then 0 else 2,
         "includeAll": false,
         "multi": false,
         "name": "cluster",
