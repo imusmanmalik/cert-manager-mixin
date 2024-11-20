@@ -24,9 +24,9 @@ tests:
   # Cert expiry
   - interval: 1m
     input_series:
-      - series: certmanager_certificate_expiration_timestamp_seconds{namespace="cert-manager", exported_namespace="test", name="expired-ingress-cert", foo="bar"}
+      - series: certmanager_certificate_expiration_timestamp_seconds{job="cert-manager", namespace="cert-manager", exported_namespace="test", name="expired-ingress-cert", foo="bar"}
         values: 1814400+0x43200 # 21d in seconds, static for 30d of samples
-      - series: certmanager_certificate_expiration_timestamp_seconds{namespace="cert-manager", exported_namespace="test", name="90d-ingress-cert"}
+      - series: certmanager_certificate_expiration_timestamp_seconds{job="cert-manager", namespace="cert-manager", exported_namespace="test", name="90d-ingress-cert"}
         values: 7776000+0x43200 # 90d in seconds, static for 30d of samples
     alert_rule_test:
       - eval_time: 61m
@@ -34,6 +34,7 @@ tests:
         exp_alerts:
           - exp_labels:
               severity: warning
+              job: cert-manager
               exported_namespace: test
               namespace: cert-manager
               name: expired-ingress-cert
@@ -47,11 +48,11 @@ tests:
   # Cert not ready
   - interval: 1m
     input_series:
-      - series: certmanager_certificate_ready_status{namespace="cert-manager", exported_namespace="test", name="ready", condition="True"}
+      - series: certmanager_certificate_ready_status{job="cert-manager", namespace="cert-manager", exported_namespace="test", name="ready", condition="True"}
         values: 1+0x30
-      - series: certmanager_certificate_ready_status{namespace="cert-manager", exported_namespace="test", name="not ready", condition="False"}
+      - series: certmanager_certificate_ready_status{job="cert-manager", namespace="cert-manager", exported_namespace="test", name="not ready", condition="False"}
         values: 1+0x30
-      - series: certmanager_certificate_ready_status{namespace="cert-manager", exported_namespace="test", name="who knows", condition="Unknown"}
+      - series: certmanager_certificate_ready_status{job="cert-manager", namespace="cert-manager", exported_namespace="test", name="who knows", condition="Unknown"}
         values: 1+0x30
     alert_rule_test:
       - eval_time: 10m
@@ -59,6 +60,7 @@ tests:
         exp_alerts:
           - exp_labels:
               severity: critical
+              job: cert-manager
               exported_namespace: test
               namespace: cert-manager
               name: not ready
@@ -72,6 +74,7 @@ tests:
               runbook_url: "https://github.com/imusmanmalik/cert-manager-mixin/blob/main/RUNBOOK.md#certmanagercertnotready"
           - exp_labels:
               severity: critical
+              job: cert-manager
               exported_namespace: test
               namespace: cert-manager
               name: who knows
@@ -87,11 +90,11 @@ tests:
   # cert-manager rate limits
   - interval: 1m
     input_series:
-      - series: certmanager_http_acme_client_request_count{status="200", host="normal.acme-v02.api.letsencrypt.org", path="/acme/new-order"}
+      - series: certmanager_http_acme_client_request_count{job="cert-manager", status="200", host="normal.acme-v02.api.letsencrypt.org", path="/acme/new-order"}
         values: 1+1x30
-      - series: certmanager_http_acme_client_request_count{status="429", host="rate-limited.acme-v02.api.letsencrypt.org", path="/acme/new-order"}
+      - series: certmanager_http_acme_client_request_count{job="cert-manager", status="429", host="rate-limited.acme-v02.api.letsencrypt.org", path="/acme/new-order"}
         values: 1+1x30
-      - series: certmanager_http_acme_client_request_count{status="429", host="one-limited-request.acme-v02.api.letsencrypt.org", path="/acme/new-order"}
+      - series: certmanager_http_acme_client_request_count{job="cert-manager", status="429", host="one-limited-request.acme-v02.api.letsencrypt.org", path="/acme/new-order"}
         values: 1+0x30
     alert_rule_test:
       - eval_time: 10m
@@ -99,6 +102,7 @@ tests:
         exp_alerts:
           - exp_labels:
               severity: critical
+              job: cert-manager
               host: rate-limited.acme-v02.api.letsencrypt.org
               status: 429
             exp_annotations:

@@ -6,7 +6,7 @@
         {
           local alert = 'CertManagerAbsent',
           alert: alert,
-          expr: 'absent(up{job="%(certManagerJobLabel)s"})' % $._config,
+          expr: 'absent(up{%s})' % $._config.certManagerSelector,
           'for': '10m',
           labels: {
             severity: 'critical',
