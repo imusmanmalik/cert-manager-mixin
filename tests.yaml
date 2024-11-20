@@ -37,6 +37,7 @@ tests:
               exported_namespace: test
               namespace: cert-manager
               name: expired-ingress-cert
+              foo: bar
             exp_annotations:
               summary: The cert `expired-ingress-cert` is 20d 22h 59m 0s from expiry, it should have renewed over a week ago.
               description: "The domain that this cert covers will be unavailable after 20d 22h 59m 0s. Clients using endpoints that this cert protects will start to fail in 20d 22h 59m 0s."
@@ -99,6 +100,7 @@ tests:
           - exp_labels:
               severity: critical
               host: rate-limited.acme-v02.api.letsencrypt.org
+              status: 429
             exp_annotations:
               summary: "Cert manager hitting LetsEncrypt rate limits."
               description: "Depending on the rate limit, cert-manager may be unable to generate certificates for up to a week."
