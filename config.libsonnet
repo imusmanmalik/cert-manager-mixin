@@ -11,7 +11,7 @@
     dashboards: {
       enableMultiCluster: false,
       clusterVariableSelector: '',
-      containerName: 'cert-manager-controller',
+      containerName: 'cert-manager',
       namespace: 'cert-manager',
 
       defaultSelector: if self.enableMultiCluster then 'cluster="$cluster"' else '',
