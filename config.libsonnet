@@ -12,11 +12,11 @@
       enableMultiCluster: false,
       clusterVariableSelector: '',
       containerName: 'cert-manager-controller',
-      containerNamespace: 'cert-manager',
+      namespace: 'cert-manager',
 
       defaultSelector: if self.enableMultiCluster then 'cluster="$cluster"' else '',
       containerSelector: 'container="%s"' % self.containerName + if self.enableMultiCluster then ',cluster="$cluster"' else '',
-      namespaceSelector: 'namespace="%s"' % self.containerNamespace + if self.enableMultiCluster then ',cluster="$cluster"' else '',
+      namespaceSelector: 'namespace="%s"' % self.namespace + if self.enableMultiCluster then ',cluster="$cluster"' else '',
 
       certmanagerCertificateReadyStatusSelector: self.defaultSelector,
       certmanagerCertificateExpirationTimestampSecondsSelector: self.defaultSelector,
