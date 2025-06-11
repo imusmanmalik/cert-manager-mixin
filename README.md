@@ -31,7 +31,7 @@ Generate yaml:
 make
 ```
 
-To use the dashboard, it can be imported or provisioned for Grafana by grabbing the [cert-manager.json](dashboards/cert-manager.json) file as is.
+To use the dashboard, it can be imported or provisioned for Grafana by grabbing the [overview.json](dashboards/overview.json) file as is.
 
 ## Multi Cluster Support
 
