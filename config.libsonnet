@@ -2,7 +2,7 @@
 {
   _config+:: {
     certManagerCertExpiryDays: '21',
-    certManagerJobLabel: 'cert-manager',
+    certManagerSelector: 'job="cert-manager"',
     certManagerRunbookURLPattern: 'https://github.com/imusmanmalik/cert-manager-mixin/blob/main/RUNBOOK.md#%s',
     grafanaExternalUrl: 'https://grafana.example.com',
 

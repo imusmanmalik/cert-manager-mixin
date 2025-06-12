@@ -7,10 +7,9 @@
           local alert = 'CertManagerCertExpirySoon',
           alert: alert,
           expr: |||
-            avg by (exported_namespace, namespace, name) (
-              certmanager_certificate_expiration_timestamp_seconds - time()
-            ) < (%s * 24 * 3600) # 21 days in seconds
-          ||| % $._config.certManagerCertExpiryDays,
+            certmanager_certificate_expiration_timestamp_seconds{%s} - time()
+            < (%s * 24 * 3600) # 21 days in seconds
+          ||| % [$._config.certManagerSelector, $._config.certManagerCertExpiryDays],
           'for': '1h',
           labels: {
             severity: 'warning',
@@ -26,10 +25,8 @@
           local alert = 'CertManagerCertNotReady',
           alert: alert,
           expr: |||
-            max by (name, exported_namespace, namespace, condition) (
-              certmanager_certificate_ready_status{condition!="True"} == 1
-            )
-          |||,
+            certmanager_certificate_ready_status{%s, condition!="True"} == 1
+          ||| % $._config.certManagerSelector,
           'for': '10m',
           labels: {
             severity: 'critical',
@@ -45,10 +42,10 @@
           local alert = 'CertManagerHittingRateLimits',
           alert: alert,
           expr: |||
-            sum by (host) (
-              rate(certmanager_http_acme_client_request_count{status="429"}[5m])
+            sum without (method, path) (
+              rate(certmanager_http_acme_client_request_count{%s, status="429"}[5m])
             ) > 0
-          |||,
+          ||| % $._config.certManagerSelector,
           'for': '5m',
           labels: {
             severity: 'critical',
