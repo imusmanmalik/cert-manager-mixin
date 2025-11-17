@@ -11,11 +11,14 @@
           labels: {
             severity: 'critical',
           },
-          annotations: {
-            summary: 'Cert Manager has disappeared from Prometheus service discovery.',
-            description: "New certificates will not be able to be minted, and existing ones can't be renewed until cert-manager is back.",
-            runbook_url: $._config.certManagerRunbookURLPattern % std.asciiLower(alert),
-          },
+          annotations:
+            {
+              summary: 'Cert Manager has disappeared from Prometheus service discovery.',
+              description: "New certificates will not be able to be minted, and existing ones can't be renewed until cert-manager is back.",
+            }
+            + (if $._config.certManagerRunbookURLEnabled then {
+              runbook_url: $._config.certManagerRunbookURLPattern % std.asciiLower(alert),
+            } else {}),
         },
       ],
     }],

@@ -3,7 +3,9 @@
   _config+:: {
     certManagerCertExpiryDays: '21',
     certManagerJobLabel: 'cert-manager',
+    certManagerRunbookURLEnabled: true,
     certManagerRunbookURLPattern: 'https://github.com/imusmanmalik/cert-manager-mixin/blob/main/RUNBOOK.md#%s',
+    grafanaExternalUrlEnabled: true,
     grafanaExternalUrl: 'https://grafana.example.com',
 
     // Selectors are inserted between {} in Prometheus queries.

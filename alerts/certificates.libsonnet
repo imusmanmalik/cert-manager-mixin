@@ -15,12 +15,17 @@
           labels: {
             severity: 'warning',
           },
-          annotations: {
-            summary: 'The cert `{{ $labels.name }}` is {{ $value | humanizeDuration }} from expiry, it should have renewed over a week ago.',
-            description: 'The domain that this cert covers will be unavailable after {{ $value | humanizeDuration }}. Clients using endpoints that this cert protects will start to fail in {{ $value | humanizeDuration }}.',
-            dashboard_url: $._config.grafanaExternalUrl + '/d/TvuRo2iMk/cert-manager',
-            runbook_url: $._config.certManagerRunbookURLPattern % std.asciiLower(alert),
-          },
+          annotations:
+            {
+              summary: 'The cert `{{ $labels.name }}` is {{ $value | humanizeDuration }} from expiry, it should have renewed over a week ago.',
+              description: 'The domain that this cert covers will be unavailable after {{ $value | humanizeDuration }}. Clients using endpoints that this cert protects will start to fail in {{ $value | humanizeDuration }}.',
+            }
+            + (if $._config.grafanaExternalUrlEnabled then {
+              dashboard_url: $._config.grafanaExternalUrl + '/d/TvuRo2iMk/cert-manager',
+            } else {})
+            + (if $._config.certManagerRunbookURLEnabled then {
+              runbook_url: $._config.certManagerRunbookURLPattern % std.asciiLower(alert),
+            } else {}),
         },
         {
           local alert = 'CertManagerCertNotReady',
@@ -34,12 +39,17 @@
           labels: {
             severity: 'critical',
           },
-          annotations: {
-            summary: 'The cert `{{ $labels.name }}` is not ready to serve traffic.',
-            description: 'This certificate has not been ready to serve traffic for at least 10m. If the cert is being renewed or there is another valid cert, the ingress controller _may_ be able to serve that instead.',
-            dashboard_url: $._config.grafanaExternalUrl + '/d/TvuRo2iMk/cert-manager',
-            runbook_url: $._config.certManagerRunbookURLPattern % std.asciiLower(alert),
-          },
+          annotations:
+            {
+              summary: 'The cert `{{ $labels.name }}` is not ready to serve traffic.',
+              description: 'This certificate has not been ready to serve traffic for at least 10m. If the cert is being renewed or there is another valid cert, the ingress controller _may_ be able to serve that instead.',
+            }
+            + (if $._config.grafanaExternalUrlEnabled then {
+              dashboard_url: $._config.grafanaExternalUrl + '/d/TvuRo2iMk/cert-manager',
+            } else {})
+            + (if $._config.certManagerRunbookURLEnabled then {
+              runbook_url: $._config.certManagerRunbookURLPattern % std.asciiLower(alert),
+            } else {}),
         },
         {
           local alert = 'CertManagerHittingRateLimits',
@@ -53,12 +63,17 @@
           labels: {
             severity: 'critical',
           },
-          annotations: {
-            summary: 'Cert manager hitting LetsEncrypt rate limits.',
-            description: 'Depending on the rate limit, cert-manager may be unable to generate certificates for up to a week.',
-            dashboard_url: $._config.grafanaExternalUrl + '/d/TvuRo2iMk/cert-manager',
-            runbook_url: $._config.certManagerRunbookURLPattern % std.asciiLower(alert),
-          },
+          annotations:
+            {
+              summary: 'Cert manager hitting LetsEncrypt rate limits.',
+              description: 'Depending on the rate limit, cert-manager may be unable to generate certificates for up to a week.',
+            }
+            + (if $._config.grafanaExternalUrlEnabled then {
+              dashboard_url: $._config.grafanaExternalUrl + '/d/TvuRo2iMk/cert-manager',
+            } else {})
+            + (if $._config.certManagerRunbookURLEnabled then {
+              runbook_url: $._config.certManagerRunbookURLPattern % std.asciiLower(alert),
+            } else {}),
         },
       ],
     }],
