@@ -17,8 +17,8 @@
               description: "New certificates will not be able to be minted, and existing ones can't be renewed until cert-manager is back.",
             }
             + (if $._config.certManagerRunbookURLEnabled then {
-              runbook_url: $._config.certManagerRunbookURLPattern % std.asciiLower(alert),
-            } else {}),
+                 runbook_url: $._config.certManagerRunbookURLPattern % std.asciiLower(alert),
+               } else {}),
         },
       ],
     }],
