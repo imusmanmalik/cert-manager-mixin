@@ -16,7 +16,7 @@
     // Selectors are inserted between {} in Prometheus queries.
     dashboards: {
       defaultSelector: if cfg.enableMultiCluster then 'cluster="$cluster"' else '',
-      containerSelector: if cfg.enableMultiCluster then 'container="cert-manager", cluster="$cluster"' else 'container="cert-manager"',
+      containerSelector: if cfg.enableMultiCluster then 'container=~"cert-manager.*", cluster="$cluster"' else 'container=~"cert-manager.*"',
       namespaceSelector: if cfg.enableMultiCluster then 'namespace="cert-manager", cluster="$cluster"' else 'namespace="cert-manager"',
 
       certmanagerCertificateReadyStatusSelector: self.defaultSelector,
