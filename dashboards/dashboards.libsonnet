@@ -1,5 +1,5 @@
 {
   grafanaDashboards+:: {
-    'overview.json': (import 'overview.json') + { _config: $._config },
+    'cert-manager-overview.json': (import 'cert-manager-overview.json') + { _config: $._config },
   },
 }
