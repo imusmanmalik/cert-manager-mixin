@@ -10,7 +10,7 @@
     grafanaExternalUrlEnabled: true,
     grafanaExternalUrl: 'https://grafana.example.com',
 
-    enableMultiCluster: true,
+    enableMultiCluster: false,
     clusterVariableSelector: '',
 
     // Selectors are inserted between {} in Prometheus queries.
