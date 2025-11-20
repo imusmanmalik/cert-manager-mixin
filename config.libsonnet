@@ -1,20 +1,23 @@
 // Prometheus Mixin Config
 {
   _config+:: {
+    local cfg = self,
+
     certManagerCertExpiryDays: '21',
     certManagerJobLabel: 'cert-manager',
+    certManagerRunbookURLEnabled: true,
     certManagerRunbookURLPattern: 'https://github.com/imusmanmalik/cert-manager-mixin/blob/main/RUNBOOK.md#%s',
+    grafanaExternalUrlEnabled: true,
     grafanaExternalUrl: 'https://grafana.example.com',
 
+    enableMultiCluster: false,
+    clusterVariableSelector: '',
+
     // Selectors are inserted between {} in Prometheus queries.
-
     dashboards: {
-      enableMultiCluster: false,
-      clusterVariableSelector: '',
-
-      defaultSelector: if self.enableMultiCluster then 'cluster="$cluster"' else '',
-      containerSelector: if self.enableMultiCluster then 'container="cert-manager", cluster="$cluster"' else 'container="cert-manager"',
-      namespaceSelector: if self.enableMultiCluster then 'namespace="cert-manager", cluster="$cluster"' else 'namespace="cert-manager"',
+      defaultSelector: if cfg.enableMultiCluster then 'cluster="$cluster"' else '',
+      containerSelector: if cfg.enableMultiCluster then 'container=~"cert-manager.*", cluster="$cluster"' else 'container=~"cert-manager.*"',
+      namespaceSelector: if cfg.enableMultiCluster then 'namespace="cert-manager", cluster="$cluster"' else 'namespace="cert-manager"',
 
       certmanagerCertificateReadyStatusSelector: self.defaultSelector,
       certmanagerCertificateExpirationTimestampSecondsSelector: self.defaultSelector,

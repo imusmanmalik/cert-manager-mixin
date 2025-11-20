@@ -31,7 +31,7 @@ Generate yaml:
 make
 ```
 
-To use the dashboard, it can be imported or provisioned for Grafana by grabbing the [overview.json](dashboards/overview.json) file as is.
+To use the dashboard, it can be imported or provisioned for Grafana by grabbing the [cert-manager-overview.json](dashboards/cert-manager-overview.json) file as is.
 
 ## Multi Cluster Support
 
@@ -39,7 +39,7 @@ It is becoming a common use-case where we run multiple Kubernetes clusters, each
 
 Grafana dashboard have now selectors for the queries to the `_config` jsonnet object.
 
-There is a variable named `enableMultiCluster` to enable the multi cluster queries for the dashboard.
+There is a variable named `enableMultiCluster` to enable the multi cluster queries for both the dashboard and the alerts.
 
 ## Manifests
 

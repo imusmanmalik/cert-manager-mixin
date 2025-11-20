@@ -1459,13 +1459,13 @@
           "uid": "$datasource"
         },
         "definition": "",
-        "hide": if $._config.dashboards.enableMultiCluster then 0 else 2,
+        "hide": if $._config.enableMultiCluster then 0 else 2,
         "includeAll": false,
         "multi": false,
-        "name": "cluster",
+        "name": "%(clusterVariableSelector)s" % $._config,
         "options": [],
         "query": {
-          "query": "label_values(certmanager_certificate_ready_status{%(clusterVariableSelector)s}, cluster)" % $._config.dashboards,
+          "query": "label_values(certmanager_certificate_ready_status, %(clusterVariableSelector)s)" % $._config,
           "refId": "Prometheus-cluster-Variable-Query"
         },
         "refresh": 2,
