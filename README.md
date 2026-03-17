@@ -4,9 +4,16 @@
 
 The cert-manager mixin is a collection of reusable and configurable [Prometheus](https://prometheus.io/) alerts, and a [Grafana](https://grafana.com) dashboard to help with operating [cert-manager](https://cert-manager.io/).
 
-## Config Tweaks
+## Configuration Options
 
-There are some configurable options you may want to override in your usage of this mixin, as they will be specific to your deployment of cert-manager. They can be found in [config.libsonnet](config.libsonnet).
+See [config.libsonnet](config.libsonnet) for all available options. Some notable ones:
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `certManagerCertExpiryRenewalElapsedThreshold` | `0.3` | Fraction of the renewal window that must elapse before `CertManagerCertExpirySoon` fires. Each certificate's renewal window is computed dynamically from `certmanager_certificate_expiration_timestamp_seconds - certmanager_certificate_renewal_timestamp_seconds`. A value of `0.3` means the alert fires once 30% of that window has passed without a successful renewal. |
+| `certManagerReplaceExportedNamespace` | `false` | When `true`, certificate alerts use `label_replace` to promote `exported_namespace` to `namespace` and drop the original `exported_namespace` label. This is useful when the `namespace` label should reflect the namespace where the certificate resource lives, rather than the namespace of the cert-manager controller itself. |
+| `enableMultiCluster` | `false` | Enable multi-cluster label selectors in alerts and dashboards. |
+| `clusterVariableSelector` | `''` | The label name used to distinguish clusters (e.g. `cluster`). Only effective when `enableMultiCluster` is `true`. |
 
 ## Using the mixin with kube-prometheus
 

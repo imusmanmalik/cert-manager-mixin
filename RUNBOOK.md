@@ -16,7 +16,9 @@ This alert fires when there is no cert-manager endpoint discovered by Prometheus
 
 ## CertManagerCertExpirySoon
 
-A certificate that cert-manager is maintaining is due to expire within 21 days. Typically ACME certs are updated 30 days before expiry, so this is unusual.
+A certificate that cert-manager is maintaining has not been renewed within the expected timeframe. Rather than using a fixed expiry threshold, this alert dynamically computes each certificate's renewal window from `certmanager_certificate_expiration_timestamp_seconds - certmanager_certificate_renewal_timestamp_seconds` and fires once a configurable fraction of that window has elapsed (default: 30%, controlled by `certManagerCertExpiryRenewalElapsedThreshold`).
+
+This alert only fires for certificates that are currently in a **Ready** state (`certmanager_certificate_ready_status{condition="True"}`). Certificates that are not ready will trigger the separate `CertManagerCertNotReady` alert instead.
 
 Ensure the certificate issuer is configured correctly. Check cert-manager logs for errors renewing this certificate.
 

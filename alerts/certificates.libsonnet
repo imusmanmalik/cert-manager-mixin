@@ -5,19 +5,50 @@
       rules: [
         {
           local alert = 'CertManagerCertExpirySoon',
+          local clusterSel = if $._config.enableMultiCluster && $._config.clusterVariableSelector != '' then ', ' + $._config.clusterVariableSelector else '',
           alert: alert,
-          expr: |||
-            avg by (exported_namespace, namespace, name%s) (
-              certmanager_certificate_expiration_timestamp_seconds - time()
-            ) < (%s * 24 * 3600) # 21 days in seconds
-          ||| % [if $._config.enableMultiCluster && $._config.clusterVariableSelector != '' then ', ' + $._config.clusterVariableSelector else '', $._config.certManagerCertExpiryDays],
+          local remainingThreshold = '%g' % (1 - $._config.certManagerCertExpiryRenewalElapsedThreshold),
+          expr: if $._config.certManagerReplaceExportedNamespace then
+            |||
+              min without (exported_namespace) (
+                label_replace(
+                  avg by (exported_namespace, namespace, name%s) (
+                    (certmanager_certificate_expiration_timestamp_seconds - time())
+                    and on (exported_namespace, namespace, name%s)
+                    (certmanager_certificate_ready_status{condition="True"} == 1)
+                  ),
+                  "namespace", "$1", "exported_namespace", "(.*)"
+                )
+              )
+              <
+              min without (exported_namespace) (
+                label_replace(
+                  avg by (exported_namespace, namespace, name%s) (
+                    certmanager_certificate_expiration_timestamp_seconds - certmanager_certificate_renewal_timestamp_seconds
+                  ),
+                  "namespace", "$1", "exported_namespace", "(.*)"
+                )
+              ) * %s
+            ||| % [clusterSel, clusterSel, clusterSel, remainingThreshold]
+          else
+            |||
+              avg by (exported_namespace, namespace, name%s) (
+                (certmanager_certificate_expiration_timestamp_seconds - time())
+                and on (exported_namespace, namespace, name%s)
+                (certmanager_certificate_ready_status{condition="True"} == 1)
+              )
+              <
+              avg by (exported_namespace, namespace, name%s) (
+                certmanager_certificate_expiration_timestamp_seconds - certmanager_certificate_renewal_timestamp_seconds
+              ) * %s
+            ||| % [clusterSel, clusterSel, clusterSel, remainingThreshold],
           'for': '1h',
           labels: {
             severity: 'warning',
           },
           annotations:
             {
-              summary: 'The cert `{{ $labels.name }}` is {{ $value | humanizeDuration }} from expiry, it should have renewed over a week ago.',
+              summary: 'The cert `{{ $labels.name }}` is {{ $value | humanizeDuration }} from expiry, it should have been renewed by now.',
               description: 'The domain that this cert covers will be unavailable after {{ $value | humanizeDuration }}. Clients using endpoints that this cert protects will start to fail in {{ $value | humanizeDuration }}.',
             }
             + (if $._config.grafanaExternalUrlEnabled then {
@@ -29,12 +60,25 @@
         },
         {
           local alert = 'CertManagerCertNotReady',
+          local clusterSel = if $._config.enableMultiCluster && $._config.clusterVariableSelector != '' then ', ' + $._config.clusterVariableSelector else '',
           alert: alert,
-          expr: |||
-            max by (name, exported_namespace, namespace, condition%s) (
-              certmanager_certificate_ready_status{condition!="True"} == 1
-            )
-          ||| % (if $._config.enableMultiCluster && $._config.clusterVariableSelector != '' then ', ' + $._config.clusterVariableSelector else ''),
+          expr: if $._config.certManagerReplaceExportedNamespace then
+            |||
+              min without (exported_namespace) (
+                label_replace(
+                  max by (name, exported_namespace, namespace, condition%s) (
+                    certmanager_certificate_ready_status{condition!="True"} == 1
+                  ),
+                  "namespace", "$1", "exported_namespace", "(.*)"
+                )
+              )
+            ||| % clusterSel
+          else
+            |||
+              max by (name, exported_namespace, namespace, condition%s) (
+                certmanager_certificate_ready_status{condition!="True"} == 1
+              )
+            ||| % clusterSel,
           'for': '10m',
           labels: {
             severity: 'critical',
