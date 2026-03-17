@@ -3,12 +3,16 @@
   _config+:: {
     local cfg = self,
 
-    certManagerCertExpiryDays: '21',
+    // Fraction of the renewal window elapsed before alerting (0.3 = alert after 30% of renewal window has passed).
+    certManagerCertExpiryRenewalElapsedThreshold: 0.3,
     certManagerJobLabel: 'cert-manager',
     certManagerRunbookURLEnabled: true,
     certManagerRunbookURLPattern: 'https://github.com/imusmanmalik/cert-manager-mixin/blob/main/RUNBOOK.md#%s',
     grafanaExternalUrlEnabled: true,
     grafanaExternalUrl: 'https://grafana.example.com',
+
+    // When true, replaces exported_namespace with namespace in certificate alerts
+    certManagerReplaceExportedNamespace: false,
 
     enableMultiCluster: false,
     clusterVariableSelector: '',

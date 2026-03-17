@@ -24,12 +24,25 @@ tests:
   # Cert expiry
   - interval: 1m
     input_series:
+      # Short-lived cert: expires in 2h, renewal starts at 30m → renewal window 1.5h
+      # Threshold = 1.5h * 0.7 = 63m. Fires when time_to_expiry < 63m, i.e. at t=57m+.
+      # With for: 1h, alert fires at ~118m when time_to_expiry = 2m.
       - series: certmanager_certificate_expiration_timestamp_seconds{namespace="cert-manager", exported_namespace="test", name="expired-ingress-cert", foo="bar"}
-        values: 1814400+0x43200 # 21d in seconds, static for 30d of samples
+        values: 7200+0x200
+      - series: certmanager_certificate_renewal_timestamp_seconds{namespace="cert-manager", exported_namespace="test", name="expired-ingress-cert", foo="bar"}
+        values: 1800+0x200
+      - series: certmanager_certificate_ready_status{namespace="cert-manager", exported_namespace="test", name="expired-ingress-cert", condition="True"}
+        values: 1+0x200
+      # Long-lived cert: expires in 90d, renewal at 60d → renewal window 30d
+      # Threshold = 30d * 0.7 = 21d. At t=118m, time_to_expiry ≈ 89.99d >> 21d → does not fire.
       - series: certmanager_certificate_expiration_timestamp_seconds{namespace="cert-manager", exported_namespace="test", name="90d-ingress-cert"}
-        values: 7776000+0x43200 # 90d in seconds, static for 30d of samples
+        values: 7776000+0x200
+      - series: certmanager_certificate_renewal_timestamp_seconds{namespace="cert-manager", exported_namespace="test", name="90d-ingress-cert"}
+        values: 5184000+0x200
+      - series: certmanager_certificate_ready_status{namespace="cert-manager", exported_namespace="test", name="90d-ingress-cert", condition="True"}
+        values: 1+0x200
     alert_rule_test:
-      - eval_time: 61m
+      - eval_time: 118m
         alertname: CertManagerCertExpirySoon
         exp_alerts:
           - exp_labels:
@@ -38,8 +51,8 @@ tests:
               namespace: cert-manager
               name: expired-ingress-cert
             exp_annotations:
-              summary: The cert `expired-ingress-cert` is 20d 22h 59m 0s from expiry, it should have renewed over a week ago.
-              description: "The domain that this cert covers will be unavailable after 20d 22h 59m 0s. Clients using endpoints that this cert protects will start to fail in 20d 22h 59m 0s."
+              summary: The cert `expired-ingress-cert` is 2m 0s from expiry, it should have been renewed by now.
+              description: "The domain that this cert covers will be unavailable after 2m 0s. Clients using endpoints that this cert protects will start to fail in 2m 0s."
               dashboard_url: https://grafana.example.com/d/TvuRo2iMk/cert-manager
               runbook_url: "https://github.com/imusmanmalik/cert-manager-mixin/blob/main/RUNBOOK.md#certmanagercertexpirysoon"
 
